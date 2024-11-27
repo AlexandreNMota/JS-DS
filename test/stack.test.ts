@@ -57,11 +57,11 @@ describe('Stack', () => {
         expect(stack.isEmpty()).toBe(true);
     });
 
-   test('deve retornar a representação em string corretamente', () => {
+    test('deve retornar a representação em string corretamente', () => {
        stack.push(1);
        stack.push(2);
        expect(stack.toString()).toBe('1, 2');
-   });
+    });
 
     test('deve verificar se um elemento está presente na pilha', () => {
         stack.push(1);
@@ -71,29 +71,29 @@ describe('Stack', () => {
     });
 
    
-   test('deve lançar erro ao adicionar tipos inválidos com push', () => {
+    test('deve lançar erro ao adicionar tipos inválidos com push', () => {
        expect(() => stack.push("string" as any)).toThrow(/Tipo inválido/); 
        expect(() => stack.push({ key: "value" } as any)).toThrow(/Tipo inválido/); 
        expect(() => stack.push(null as any)).toThrow(/Tipo inválido/); 
        expect(() => stack.push(undefined as any)).toThrow(/Tipo inválido/); 
-   });
+    });
    
-   test('deve lançar erro ao inicializar com tipos inválidos', () => {
+    test('deve lançar erro ao inicializar com tipos inválidos', () => {
        expect(() => new Stack<number>(["string"] as any)).toThrow(/Tipo inválido na inicialização/); 
        expect(() => new Stack<number>([{ key: "value" }] as any)).toThrow(/Tipo inválido na inicialização/); 
        expect(() => new Stack<number>([null] as any)).toThrow(/Tipo inválido na inicialização/); 
        expect(() => new Stack<number>([undefined] as any)).toThrow(/Tipo inválido na inicialização/); 
-   });
+    });
 
-   test('deve ordenar a pilha em ordem crescente', () => {
+    test('deve ordenar a pilha em ordem crescente', () => {
         stack.push(3);
         stack.push(1);
         stack.push(2);
 
         stack.sort(true);
         expect(stack.getItems()).toEqual([1, 2, 3]);
-   });
-   test('deve ordenar a pilha em ordem decrescente', () => {
+    });
+    test('deve ordenar a pilha em ordem decrescente', () => {
         stack.push(3);
         stack.push(1);
         stack.push(2);
@@ -102,7 +102,7 @@ describe('Stack', () => {
         
         expect(stack.getItems()).toEqual([3, 2, 1]);
     });
-   test('deve migrar elementos para Set e remover duplicatas', () => {
+    test('deve migrar elementos para Set e remover duplicatas', () => {
         stack.push(1);
         stack.push(2);
         stack.push(2); // Duplicata
@@ -170,5 +170,13 @@ describe('Stack', () => {
         }
     
         expect(items).toEqual([3, 2, 1]); // A ordem deve ser LIFO
+    });
+
+    test("avaliar comportamento de iteração sobre pilha vazia", ()=>{
+        let item_teste : number | undefined;
+        for (const item of stack) {
+            item_teste = item;
+        }
+        expect(item_teste).toEqual(undefined);
     });
 });
