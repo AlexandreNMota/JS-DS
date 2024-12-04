@@ -13,7 +13,7 @@ export class StreamableStack<T> extends Stack<T> {
                 if (stackInstance.isEmpty()) { // Usa a referência da pilha
                     this.push(null); // Indica que não há mais dados
                 } else {
-                    this.push((stackInstance.pop() as T).toString()); // Converte o número para string
+                    this.push((stackInstance.pop() as T));
                 }
             }
         });
