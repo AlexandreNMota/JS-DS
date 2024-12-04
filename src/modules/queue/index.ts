@@ -160,39 +160,39 @@ export class Queue<T> implements IQueue<T> {
 /**
  * Efetua a inversão dos elementos da fila
  */
-public reverse(): void {
-    this.items.reverse();
-}
+    public reverse(): void {
+        this.items.reverse();
+    }
 /**
 * Retorna um array com os elementos da fila
 */
-public toArray(): T[] {
-    return [...this.items];
-}
+    public toArray(): T[] {
+        return [...this.items];
+    }
 
 /**
 * Retorna um cópia da fila atual
 */
-public copy(): Queue<T> {
-    return new Queue<T>(this.getItems(), this.typeCheck);
-}
+    public copy(): Queue<T> {
+        return new Queue<T>(this.getItems(), this.typeCheck);
+    }
 
 /**
 * Permite a iteração sobre os elementos da fila.
 */
-[Symbol.iterator](): Iterator<T> {
-    let index = this.items.length;
-    return {
-        next: (): IteratorResult<T> => {
-            if (index > 0) {
-                index--;
-                return { value: this.items[index], done: false };
-            }else{
-                return { done: true, value: undefined };
+    [Symbol.iterator](): Iterator<T> {
+        let index = this.items.length;
+        return {
+            next: (): IteratorResult<T> => {
+                if (index > 0) {
+                    index--;
+                    return { value: this.items[index], done: false };
+                }else{
+                    return { done: true, value: undefined };
+                }
             }
         }
     }
-}
 
 
 }
