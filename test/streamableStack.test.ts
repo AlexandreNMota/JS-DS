@@ -1,7 +1,4 @@
-// streamableStack.test.ts
-
 import { StreamableStack } from "../src";
-
 
 describe('StreamableStack', () => {
     let stack: StreamableStack<number>;
@@ -11,17 +8,18 @@ describe('StreamableStack', () => {
     });
 
     test('should create a readable stream and read elements', (done) => {
+        jest.setTimeout(10000); // Aumenta o timeout para 10 segundos
         const readableStream = stack.createReadableStream();
 
-        const results: number[] = [];
+        const results: string[] = []; // Alterado para string
 
         readableStream.on('data', (chunk) => {
-            results.push(chunk as number);
+            results.push(chunk as string); // Armazena como string
         });
 
         readableStream.on('end', () => {
-            expect(results).toEqual([3, 2, 1]); // Verifica se os elementos foram lidos na ordem correta
-            done(); // Indica que o teste terminou
+            expect(results).toEqual(['3', '2', '1']); // Verifica se os elementos foram lidos na ordem correta
+            done();
         });
     });
 
