@@ -12,7 +12,13 @@ import { IQueue } from "../../@types";
  * - getItems(): T[]
  * - toString(): string
  * - fromArray(elements: T[]): void
- *
+ * - contains(element: T): boolean
+ * - sort(ascending: boolean = true): void
+ * - migrateToSet(): void
+ * - reverse(): void
+ * - toArray(): T[]
+ * - copy(): Queue<T>
+ * 
  * @template T - O tipo dos elementos na fila.
  */
 export class Queue<T> implements IQueue<T> {
@@ -119,4 +125,74 @@ export class Queue<T> implements IQueue<T> {
         }
         this.items.push(...elements);
     }
+
+/**
+ * Verifica se um determinado elemento está presente na fila.
+ * @param element - O elemento a ser verificado na fila.
+ * @returns true se o elemento estiver presente, caso contrário, false.
+ */
+    contains(element: T): boolean {
+        return this.items.includes(element);
+    }
+
+/**
+ * Ordena os elementos da fila em ordem crescente ou decrescente.
+ * @param ascending - Se true, ordena em ordem crescente; se false, em ordem decrescente.
+ */
+    sort(ascending: boolean = true): void {
+        this.items.sort((a, b) => {
+            if (a < b) return ascending ? -1 : 1;
+            if (a > b) return ascending ? 1 : -1;
+            return 0;
+        });
+    }
+
+/**
+ * Converte a estrutura base da fila para um Set, removendo duplicatas e mantendo a estrutura de fila.
+ */
+    public migrateToSet(): void {
+        const uniqueItems = new Set(this.items);
+        this.clear(); 
+        this.fromArray(Array.from(uniqueItems));
+    }
+
+
+/**
+ * Efetua a inversão dos elementos da fila
+ */
+public reverse(): void {
+    this.items.reverse();
+}
+/**
+* Retorna um array com os elementos da fila
+*/
+public toArray(): T[] {
+    return [...this.items];
+}
+
+/**
+* Retorna um cópia da fila atual
+*/
+public copy(): Queue<T> {
+    return new Queue<T>(this.getItems(), this.typeCheck);
+}
+
+/**
+* Permite a iteração sobre os elementos da fila.
+*/
+[Symbol.iterator](): Iterator<T> {
+    let index = this.items.length;
+    return {
+        next: (): IteratorResult<T> => {
+            if (index > 0) {
+                index--;
+                return { value: this.items[index], done: false };
+            }else{
+                return { done: true, value: undefined };
+            }
+        }
+    }
+}
+
+
 }
